@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Planner - Study Timer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Student Academic Planner</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="subjects.html">Subjects</a></li>
+                <li><a href="todo.html">To-Do List</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="timer.html" class="active">Study Timer</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Pomodoro Study Timer</h2>
+            <div id="timer-container">
+                <div id="timer-mode">Work Session</div>
+                <div id="timer-display">25:00</div>
+                <div class="timer-controls">
+                    <button id="start-timer-btn">Start</button>
+                    <button id="pause-timer-btn">Pause</button>
+                    <button id="reset-timer-btn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2023 Student Planner. Keep Learning!</p>
+    </footer>
+    <script src="js/timer.js"></script>
+</body>
+</html>
