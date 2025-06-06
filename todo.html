@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Planner - To-Do List</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Student Academic Planner</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="subjects.html">Subjects</a></li>
+                <li><a href="todo.html" class="active">To-Do List</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="timer.html">Study Timer</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>My To-Do List</h2>
+            <div id="todo-app">
+                <form id="new-task-form">
+                    <input type="text" id="new-task-input" placeholder="Enter a new task..." autocomplete="off">
+                    <button type="submit" id="add-task-btn">Add Task</button>
+                </form>
+                <ul id="task-list">
+                    <!-- Tasks will be added here by JavaScript -->
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2023 Student Planner. Keep Learning!</p>
+    </footer>
+    <script src="js/todo.js"></script>
+</body>
+</html>
