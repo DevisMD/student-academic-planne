@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List – Academic Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-yellow-100 to-pink-200 min-h-screen p-6">
+
+  <header class="text-center mb-6">
+    <h1 class="text-3xl font-bold text-pink-700">📝 My To-Do List</h1>
+    <p class="text-gray-700">Stay on track with your academic tasks</p>
+  </header>
+
+  <div class="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-6">
+    <div class="flex mb-4">
+      <input id="taskInput" type="text" placeholder="Enter a new task..." class="flex-1 p-2 border rounded-l-md focus:outline-none" />
+      <button onclick="addTask()" class="bg-pink-500 text-white px-4 rounded-r-md hover:bg-pink-600">Add</button>
+    </div>
+    <ul id="taskList" class="space-y-2"></ul>
+  </div>
+
+  <footer class="mt-10 text-center text-gray-600 text-sm">
+    <a class="underline" href="subjects.html">← Back to Subjects</a> | <a class="underline" href="calendar.html">Next: Calendar →</a>
+  </footer>
+
+  <script>
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+
+    function loadTasks() {
+      const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+      taskList.innerHTML = "";
+      tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.className = "flex items-center justify-between bg-gray-100 p-2 rounded";
+        li.innerHTML = `
+          <span class="${task.done ? 'line-through text-gray-500' : ''}">${task.text}</span>
+          <div class="flex gap-2">
+            <button onclick="toggleDone(${index})" class="text-green-600 hover:underline">✔</button>
+            <button onclick="deleteTask(${index})" class="text-red-600 hover:underline">✖</button>
+          </div>
+        `;
+        taskList.appendChild(li);
+      });
+    }
+
+    function addTask() {
+      const text = taskInput.value.trim();
+      if (text !== "") {
+        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        tasks.push({ text, done: false });
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        taskInput.value = "";
+        loadTasks();
+      }
+    }
+
+    function toggleDone(index) {
+      const tasks = JSON.parse(localStorage.getItem("tasks"));
+      tasks[index].done = !tasks[index].done;
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      loadTasks();
+    }
+
+    function deleteTask(index) {
+      const tasks = JSON.parse(localStorage.getItem("tasks"));
+      tasks.splice(index, 1);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      loadTasks();
+    }
+
+    loadTasks();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subjects – Academic Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-green-100 to-blue-100 min-h-screen p-6">
+
+  <header class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-blue-800">📚 My Subjects & Grades</h1>
+    <p class="text-gray-600">Keep track of your academic performance</p>
+  </header>
+
+  <main id="subjectContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+  </main>
+
+  <footer class="mt-10 text-center text-gray-600 text-sm">
+    <a class="underline" href="index.html">← Back to Home</a> | <a class="underline" href="todo.html">Next: To-Do List →</a>
+  </footer>
+
+  <script>
+    fetch('subjects.json')
+      .then(res => res.json())
+      .then(subjects => {
+        const container = document.getElementById('subjectContainer');
+        subjects.forEach(item => {
+          const card = document.createElement('div');
+          card.className = "bg-white rounded-xl shadow-md p-6 hover:scale-105 transition-all";
+          card.innerHTML = `
+            <h3 class="text-xl font-bold text-purple-700">${item.subject}</h3>
+            <p class="mt-2 text-gray-600">Grade: <span class="text-black font-semibold">${item.grade}</span></p>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(() => {
+        document.getElementById('subjectContainer').innerHTML = "<p class='text-red-500'>Failed to load subjects.</p>";
+      });
+  </script>
+
+</body>
+</html>

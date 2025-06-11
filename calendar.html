@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calendar – Academic Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-tl from-blue-100 to-indigo-100 min-h-screen p-6">
+
+  <header class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-indigo-700">📅 Academic Calendar</h1>
+    <p class="text-gray-600">Track your academic events and deadlines</p>
+  </header>
+
+  <main class="flex justify-center">
+    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-2xl">
+      <input type="month" id="monthPicker" class="mb-4 p-2 border rounded w-full" />
+      <table class="w-full text-center border">
+        <thead>
+          <tr class="bg-indigo-200 text-indigo-800">
+            <th class="p-2 border">Sun</th><th class="p-2 border">Mon</th><th class="p-2 border">Tue</th>
+            <th class="p-2 border">Wed</th><th class="p-2 border">Thu</th><th class="p-2 border">Fri</th><th class="p-2 border">Sat</th>
+          </tr>
+        </thead>
+        <tbody id="calendarBody" class="bg-white"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="mt-10 text-center text-gray-600 text-sm">
+    <a class="underline" href="todo.html">← Back to To-Do</a> | <a class="underline" href="timer.html">Next: Pomodoro Timer →</a>
+  </footer>
+
+  <script>
+    const calendarBody = document.getElementById("calendarBody");
+    const monthPicker = document.getElementById("monthPicker");
+
+    monthPicker.value = new Date().toISOString().slice(0, 7);
+    monthPicker.addEventListener("change", drawCalendar);
+
+    function drawCalendar() {
+      const [year, month] = monthPicker.value.split("-").map(Number);
+      const firstDay = new Date(year, month - 1, 1).getDay();
+      const totalDays = new Date(year, month, 0).getDate();
+
+      calendarBody.innerHTML = "";
+      let row = document.createElement("tr");
+      for (let i = 0; i < firstDay; i++) row.innerHTML += "<td class='p-2 border'></td>";
+
+      for (let d = 1; d <= totalDays; d++) {
+        if ((firstDay + d - 1) % 7 === 0 && d !== 1) {
+          calendarBody.appendChild(row);
+          row = document.createElement("tr");
+        }
+        row.innerHTML += `<td class='p-2 border hover:bg-indigo-100 cursor-pointer'>${d}</td>`;
+      }
+      calendarBody.appendChild(row);
+    }
+
+    drawCalendar();
+  </script>
+
+</body>
+</html>
