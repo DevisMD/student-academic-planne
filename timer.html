@@ -3,60 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pomodoro Timer – Academic Planner</title>
+  <title>⏳ Pomodoro Timer</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #timerDisplay {
+      font-size: 4rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+  </style>
 </head>
 <body class="bg-gradient-to-br from-red-100 to-yellow-100 min-h-screen flex flex-col items-center justify-center p-6">
+  <h1 class="text-4xl font-bold text-red-700 mb-6">⏳ Pomodoro Timer</h1>
 
-  <h1 class="text-4xl font-bold text-red-600 mb-4">⏳ Pomodoro Timer</h1>
-  <div class="text-6xl font-mono text-gray-800" id="timer">25:00</div>
-  <div class="mt-6 flex gap-4">
-    <button onclick="startTimer()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Start</button>
-    <button onclick="pauseTimer()" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Pause</button>
-    <button onclick="resetTimer()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Reset</button>
+  <div id="timerDisplay" class="text-gray-800 mb-8">25:00</div>
+
+  <div class="space-x-4">
+    <button onclick="startPomodoro()" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded shadow">Start</button>
+    <button onclick="pausePomodoro()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded shadow">Pause</button>
+    <button onclick="resetPomodoro()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded shadow">Reset</button>
   </div>
 
-  <footer class="mt-10 text-center text-gray-600 text-sm">
-    <a class="underline" href="calendar.html">← Back to Calendar</a>
-  </footer>
-
   <script>
-    let time = 25 * 60, timerID = null;
-    const timerEl = document.getElementById("timer");
+    let timer;
+    let timeLeft = 25 * 60; // 25 minutes
+    const display = document.getElementById("timerDisplay");
 
     function updateDisplay() {
-      const mins = String(Math.floor(time / 60)).padStart(2, '0');
-      const secs = String(time % 60).padStart(2, '0');
-      timerEl.textContent = \`\${mins}:\${secs}\`;
+      const minutes = Math.floor(timeLeft / 60).toString().padStart(2, "0");
+      const seconds = (timeLeft % 60).toString().padStart(2, "0");
+      display.textContent = `${minutes}:${seconds}`;
     }
 
-    function startTimer() {
-      if (timerID) return;
-      timerID = setInterval(() => {
-        if (time > 0) {
-          time--;
-          updateDisplay();
-        } else {
-          clearInterval(timerID);
-          alert("Time's up! Take a break.");
-          timerID = null;
-        }
-      }, 1000);
+    function startPomodoro() {
+      if (!timer) {
+        timer = setInterval(() => {
+          if (timeLeft > 0) {
+            timeLeft--;
+            updateDisplay();
+          } else {
+            clearInterval(timer);
+            timer = null;
+            alert("Pomodoro complete!");
+          }
+        }, 1000);
+      }
     }
 
-    function pauseTimer() {
-      clearInterval(timerID);
-      timerID = null;
+    function pausePomodoro() {
+      clearInterval(timer);
+      timer = null;
     }
 
-    function resetTimer() {
-      pauseTimer();
-      time = 25 * 60;
+    function resetPomodoro() {
+      pausePomodoro();
+      timeLeft = 25 * 60;
       updateDisplay();
     }
 
     updateDisplay();
   </script>
-
 </body>
 </html>
